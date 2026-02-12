@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Anthonete 💜</title>
+
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    background: radial-gradient(circle at center, #2a003f, #0d001a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    text-align: center;
+}
+
+/* FLOWER */
+.flower {
+    position: relative;
+    width: 280px;
+    height: 280px;
+}
+
+.petal {
+    position: absolute;
+    width: 140px;
+    height: 200px;
+    background: linear-gradient(145deg, #b266ff, #7a00cc);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+    box-shadow: 0 0 25px #bb66ff;
+}
+
+
+.center {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, #f3ccff, #b266ff);
+    border-radius: 50%;
+    top: 85px;
+    left: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 20px;
+    color: #3b0066;
+    box-shadow: 0 0 40px #d580ff;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 20px #d580ff; }
+    to { box-shadow: 0 0 60px #ffffff; }
+}
+
+/* Lyrics */
+#lyrics {
+    position: absolute;
+    bottom: 60px;
+    width: 100%;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+#lyrics.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#lyrics.final {
+    color: #f3ccff;
+    text-shadow: 0 0 20px #ffffff, 0 0 40px #d580ff;
+    animation: finalGlow 2s infinite alternate;
+}
+
+@keyframes finalGlow {
+    from { text-shadow: 0 0 20px #d580ff; }
+    to { text-shadow: 0 0 50px #ffffff; }
+}
+
+/* Flower zoom */
+.flower.zoom {
+    animation: zoomIn 5s ease forwards;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+}
+
+
+/* Falling petals */
+.fall {
+    position: absolute;
+    top: -10px;
+    font-size: 20px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+    }
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    bottom: -20px;
+    font-size: 18px;
+    animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-110vh);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="flower">
+    <div class="petal" style="transform: translate(-50%, -100%) rotate(0deg);"></div>
+    <div class="petal" style="transform: translate(-50%, -100%) rotate(60deg);"></div>
+    <div class="petal" style="transform: translate(-50%, -100%) rotate(120deg);"></div>
+    <div class="petal" style="transform: translate(-50%, -100%) rotate(180deg);"></div>
+    <div class="petal" style="transform: translate(-50%, -100%) rotate(240deg);"></div>
+    <div class="petal" style="transform: translate(-50%, -100%) rotate(300deg);"></div>
+    
+    <div class="center"></div>
+</div>
+
+<div id="lyrics"></div>
+
+<!-- 🎵 LOCAL MUSIC -->
+<audio id="bgMusic" loop>
+    <source src="tahanan.mp3" type="audio/mpeg">
+</audio>
+
+
+<script>
+const petals = document.querySelectorAll('.petal');
+const lyrics = document.getElementById('lyrics');
+const flower = document.querySelector('.flower');
+
+const messages = [
+    "FOR MY LOVELOVE 💜",
+    "MY ANTHONETE ✨",
+    "MY BESTFRIEND 💕",
+    "I LOVE YOU ALWAYS ❤️",
+    "HAPPY FIRST MONTHSARY 💜"
+];
+
+let index = 0;
+
+function bloomFlower() {
+    if (index < petals.length) {
+
+        petals[index].style.opacity = 1;
+
+        lyrics.classList.remove("show", "final");
+        lyrics.innerText = messages[index] || "";
+        
+        setTimeout(() => {
+            lyrics.classList.add("show");
+        }, 200);
+
+        if (index === messages.length - 1) {
+            lyrics.classList.add("final");
+            flower.classList.add("zoom");
+        }
+
+        index++;
+        setTimeout(bloomFlower, 3000);
+    }
+}
+
+setTimeout(bloomFlower, 1000);
+
+/* Falling purple petals */
+function createFallingPetal() {
+    const petal = document.createElement("div");
+    petal.classList.add("fall");
+    petal.innerText = "💜";
+    petal.style.left = Math.random() * window.innerWidth + "px";
+    petal.style.animationDuration = (4 + Math.random() * 5) + "s";
+    document.body.appendChild(petal);
+    setTimeout(() => petal.remove(), 9000);
+}
+setInterval(createFallingPetal, 500);
+
+/* Floating hearts */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerText = "❤️";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.animationDuration = (5 + Math.random() * 4) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 7000);
+}
+setInterval(createHeart, 800);
+const music = document.getElementById("bgMusic");
+
+// Play music after first click (fix autoplay block)
+document.addEventListener("click", function() {
+    music.play();
+}, { once: true });
+
+</script>
+
+</body>
+</html>
